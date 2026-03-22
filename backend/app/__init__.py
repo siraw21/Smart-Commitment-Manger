@@ -1,13 +1,33 @@
 from flask import Flask
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+
+
+# Create Database Instance
+db = SQLAlchemy()
+
+# Create Migrate instance
+migrate = Migrate()
 
 def create_app():
    app = Flask(__name__)
 
+   app.config.from_object("app.config.Config")
+   
    CORS(app)
+   
+   # Initialize database
+   db.init_app(app)
+
+   # Initialize Migrate
+   migrate.init_app(app, db)
+
+   # Register models
+   from app.models import User
 
    @app.route('/')
    def home():
-      return {"message": "Sirawdink Backend is running "}
+      return {"message": "Backend with DB is running "}
    
    return app
