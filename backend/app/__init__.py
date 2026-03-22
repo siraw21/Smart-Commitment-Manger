@@ -4,6 +4,7 @@ from flask_cors import CORS
 # from flask_migrate import Migrate
 from app.extensions import db, migrate
 from app.routes.user_routes import user_bp
+from app.routes.task_routes import task_bp
 
 
 # Create Database Instance
@@ -30,6 +31,7 @@ def create_app():
 
    # Register blueprint
    app.register_blueprint(user_bp)
+   app.register_blueprint(task_bp)
 
    @app.route('/')
    def home():
