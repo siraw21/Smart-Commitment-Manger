@@ -1,14 +1,16 @@
 from flask import Flask
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+# from flask_sqlalchemy import SQLAlchemy
+# from flask_migrate import Migrate
+from app.extensions import db, migrate
+from app.routes.user_routes import user_bp
 
 
 # Create Database Instance
-db = SQLAlchemy()
+# db = SQLAlchemy()
 
 # Create Migrate instance
-migrate = Migrate()
+# migrate = Migrate()
 
 def create_app():
    app = Flask(__name__)
@@ -25,6 +27,9 @@ def create_app():
 
    # Register models
    from app.models import User
+
+   # Register blueprint
+   app.register_blueprint(user_bp)
 
    @app.route('/')
    def home():
