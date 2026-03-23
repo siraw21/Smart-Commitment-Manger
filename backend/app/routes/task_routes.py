@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from app.extensions import db
 from app.models import Task
 from app.services.task_service import calculate_priority
+from app.services.task_service import generate_daily_plan
 
 task_bp = Blueprint("task_bp", __name__)
 
@@ -44,3 +45,15 @@ def get_tasks():
     result = sorted(result, key=lambda x: x['priority'], reverse=True)
 
     return jsonify(result)
+
+@task_bp.route('/plan', methods=['POST'])
+def get_daily_plan():
+    data = request.get_json()
+
+    available_minutes = data['available_minutes']
+
+    tasks = Task.query.all()
+
+    plan = generate_daily_plan(tasks, available_minutes)
+
+    return jsonify(plan)
