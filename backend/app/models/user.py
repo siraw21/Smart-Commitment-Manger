@@ -8,6 +8,7 @@ class User(db.Model):
    name = db.Column(db.String(100), nullable=False)
    email = db.Column(db.String(120), unique=True, nullable=False)
    password = db.Column(db.String(200), nullable=False)
+   energy_level = db.Column(db.String(20), default="medium")
 
    def __repr__(self):
       return f"<user {self.email}"

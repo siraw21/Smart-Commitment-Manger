@@ -46,14 +46,27 @@ def get_tasks():
 
     return jsonify(result)
 
+# @task_bp.route('/plan', methods=['POST'])
+# def get_daily_plan():
+#     data = request.get_json()
+
+#     available_minutes = data['available_minutes']
+
+#     tasks = Task.query.all()
+
+#     plan = generate_daily_plan(tasks, available_minutes)
+
+#     return jsonify(plan)
+
 @task_bp.route('/plan', methods=['POST'])
 def get_daily_plan():
     data = request.get_json()
 
     available_minutes = data['available_minutes']
+    energy_level = data['energy_level']
 
     tasks = Task.query.all()
 
-    plan = generate_daily_plan(tasks, available_minutes)
+    plan = generate_daily_plan(tasks, available_minutes, energy_level)
 
     return jsonify(plan)
